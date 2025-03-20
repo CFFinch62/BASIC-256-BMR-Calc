@@ -1,0 +1,30 @@
+# COMMAND BUTTON event handlers
+
+subroutine calculateBtnClicked()
+	alert("CALCULATE button was clicked!")
+	clickclear()
+end subroutine
+
+subroutine resetBtnClicked()
+	reset$ = upper(prompt("Enter desired reset type: B - Body Data, G - Goals, A - All" ))
+	begin case
+		case reset$ = "B"
+			alert("Body data reset was selected!")
+		case reset$ = "G"
+			alert("Goals reset was selected!")
+		case reset$ = "A"
+			call CreateBMR_GUI()
+			unit$ = "s"
+			gender$ = "m"
+			exrs = 0
+			gwt = 0
+			gcals = 0
+			bmreq = 3
+			ht = 0
+			wt = 0
+			age = 0
+		else
+			alert("Invalid entry!")
+	end case
+	clickclear()
+end subroutine

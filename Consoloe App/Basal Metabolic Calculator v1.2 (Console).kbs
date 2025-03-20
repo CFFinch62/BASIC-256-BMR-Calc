@@ -1,0 +1,138 @@
+include "pkg-bmr-calc.kbs"
+include "pkg-bmr-get_data.kbs"
+include "pkg-bmr-print_data.kbs"
+
+# GLOBAL VARIABLE DECLARATIONS
+global units$, gender$, exercise$, equation$, activity$, action$
+global fWeight, fHeight, mWeight, mHeight, gWeight
+global iAge, iCalories, sleep, bmr, baf, avgWeeklyLoss, timeToTargetWeight, weeklyBMR, weeklySavings
+global bExit
+
+# GLOBAL VARIABLE INITIALIZATION
+units$ = ""
+gender$ = ""
+exercise$ = ""
+equation$ = ""
+activity$ = ""
+action$ = ""
+fWeight = 0
+fHeight = 0
+mWeight = 0
+mHeight = 0
+gWeigth = 0
+iAge = 0
+iCalories = 0
+sleep = 8.0
+bmr = 0
+baf = 0
+weeklyBMR = 0
+weeklySavings = 0
+avgWeeklyLoss = 0
+timeToTargetWeight = 0
+bExit = FALSE
+
+# MAIN PROGRAM LOOP
+call printHeader("main")
+call getUnits()
+
+call printHeader("body")
+call getBodyData()
+call printBodyData()
+
+call printHeader("bmr")
+call getBMRData()
+call printBMRData()
+
+# menu loop
+while bExit = FALSE
+	call getAction()
+	begin case
+		case action$ = "1"
+			cls
+			units$ = ""
+			call printHeader("main")
+			call getUnits()
+			
+			call printHeader("body")
+			call getBodyData()
+			call printBodyData()
+			
+			call printHeader("bmr")
+			call getBMRData()
+			call printBMRData()			
+		case action$ = "2"
+			cls
+			call printHeader("main")
+			call getUnits()
+			
+			call printHeader("body")
+			call getBodyData()
+			call printBodyData()
+			
+			call getBMRData()
+			call printBMRData()
+		case action$ = "3"
+			cls
+			call printBMRData()	
+			equation$ = ""
+			call getBMRData()
+			
+			cls
+			call printHeader("main")
+			call getUnits()
+			
+			call printBodyData()		
+			call printBMRData()		
+		case action$ = "4"
+			cls
+			call printHeader("main")
+			call getUnits()
+			
+			call printBodyData()
+			call printBMRData()	
+								
+			call printHeader("wl")
+			call getWeightLossData()
+			call printWeightLossData()
+		else
+			bExit = TRUE
+	end case
+end while
+cls
+end
+
+subroutine getAction()
+
+	print
+	print "-------------------------------------"
+	print "MAIN MENU                            |"
+	print "-------------------------------------"
+	print "1. Change units. "
+	print "2. Re-enter body data." 
+	print "3. Change BMR equation."
+	print "4. Weight Loss calculation "
+	print
+	print "Press any other key to quit program."
+	print
+	input "ENTER ACTION SELECTION: ", action$
+	
+end subroutine
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

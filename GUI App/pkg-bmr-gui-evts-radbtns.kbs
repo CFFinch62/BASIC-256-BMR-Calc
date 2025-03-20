@@ -1,0 +1,140 @@
+# RADIO BUTTON event handlers
+
+subroutine stdRadBtnClicked()
+	if pixel(mousex,mousey) = -1 then
+		font("Times New Roman", 14, 75)
+		call DrawControl("rad","STANDARD", 0, black, green, 5, 60, 100, 10, 10)
+		call DrawControl("rad","METRIC", 0, black, white, 5, 60, 150, 10, 10)
+		color yellow
+		rect (470, 95, 150, 25)
+		rect (470, 415, 150, 25)
+		rect (650, 415, 150, 25)
+		rect (675, 590, 50, 30)
+		font("Times New Roman", 16, 75)
+		call DrawControl("lbl","WEIGHT (LBS)", 0, black, yellow, 0, 470, 95, 0, 0)
+		call DrawControl("lbl","WEIGHT (LBS)", 0, black, yellow, 0, 470, 415, 0, 0)
+		call DrawControl("lbl","HEIGHT (IN)", 0, black, yellow, 0, 650, 415, 0, 0)
+		call DrawControl("lbl","LBS", 0, black, yellow, 0, 675, 590, 0, 0)
+		units$ = "s"
+	end if
+end subroutine
+
+subroutine metricRadBtnClicked()
+	if pixel(mousex, mousey) = -1 then
+		font("Times New Roman", 14, 75)
+		call DrawControl("rad","STANDARD", 0, black, white, 5, 60, 100, 10, 10)
+		call DrawControl("rad","METRIC", 0, black, green, 5, 60, 150, 10, 10)
+		color yellow
+		rect (470, 95, 150, 25)
+		rect (470, 415, 150, 25)
+		rect (650, 415, 150, 25)
+		rect (675, 590, 50, 30)
+		font("Times New Roman", 16, 75)
+		call DrawControl("lbl","WEIGHT (KGS)", 0, black, yellow, 0, 470, 95, 0, 0)
+		call DrawControl("lbl","WEIGHT (KGS)", 0, black, yellow, 0, 470, 415, 0, 0)
+		call DrawControl("lbl","HEIGHT (CM)", 0, black, yellow, 0, 650, 415, 0, 0)
+		call DrawControl("lbl","KGS", 0, black, yellow, 0, 675, 590, 0, 0)
+		units$ = "m"
+	end if
+end subroutine
+
+subroutine maleRadBtnClicked()
+	font("Times New Roman", 14, 75)
+	call DrawControl("rad","MALE", 0, black, green, 5, 280, 100, 10, 10)
+	call DrawControl("rad","FEMALE", 0, black, white, 5, 280, 150, 10, 10)
+	gender$ = "m"
+end subroutine
+
+subroutine femaleRadBtnClicked()
+	font("Times New Roman", 14, 75)
+	call DrawControl("rad","MALE", 0, black, white, 5, 280, 100, 10, 10)
+	call DrawControl("rad","FEMALE", 0, black, green, 5, 280, 150, 10, 10)
+	gender$ = "f"
+end subroutine
+
+subroutine hbRadBtnClicked()
+	font("Times New Roman", 14, 75)
+	call DrawControl("rad","HARRIS-BENEDICT", 0, black, green, 5, 730, 100, 10, 10)
+	call DrawControl("rad","REV. HARRIS-BENEDICT", 0, black, white, 5, 730, 170, 10, 10)
+	call DrawControl("rad","MIFFLIN ST. JOER", 0, black, white, 5, 730, 240, 10, 10)
+	call DrawControl("rad","KATCH-MCARDLE", 0, black, white, 5, 730, 310, 10, 10)
+	bmreq = 0
+end subroutine
+
+subroutine rhbRadBtnClicked()
+	font("Times New Roman", 14, 75)
+	call DrawControl("rad","HARRIS-BENEDICT", 0, black, white, 5, 730, 100, 10, 10)
+	call DrawControl("rad","REV. HARRIS-BENEDICT", 0, black, green, 5, 730, 170, 10, 10)
+	call DrawControl("rad","MIFFLIN ST. JOER", 0, black, white, 5, 730, 240, 10, 10)
+	call DrawControl("rad","KATCH-MCARDLE", 0, black, white, 5, 730, 310, 10, 10)
+	bmreq = 1
+end subroutine
+
+subroutine msjRadBtnClicked()
+	font("Times New Roman", 14, 75)
+	call DrawControl("rad","HARRIS-BENEDICT", 0, black, white, 5, 730, 100, 10, 10)
+	call DrawControl("rad","REV. HARRIS-BENEDICT", 0, black, white, 5, 730, 170, 10, 10)
+	call DrawControl("rad","MIFFLIN ST. JOER", 0, black, green, 5, 730, 240, 10, 10)
+	call DrawControl("rad","KATCH-MCARDLE", 0, black, white, 5, 730, 310, 10, 10)
+	bmreq = 2
+end subroutine
+
+subroutine kmRadBtnClicked()
+	font("Times New Roman", 14, 75)
+	call DrawControl("rad","HARRIS-BENEDICT", 0, black, white, 5, 730, 100, 10, 10)
+	call DrawControl("rad","REV. HARRIS-BENEDICT", 0, black, white, 5, 730, 170, 10, 10)
+	call DrawControl("rad","MIFFLIN ST. JOER", 0, black, white, 5, 730, 240, 10, 10)
+	call DrawControl("rad","KATCH-MCARDLE", 0, black, green, 5, 730, 310, 10, 10)
+	bmreq = 3
+end subroutine
+
+subroutine sedRadBtnClicked()
+	font("Times New Roman", 14, 75)
+	call DrawControl("rad","SEDENTARY (NONE)", 0, black, green, 5, 60, 265, 10, 10)
+	call DrawControl("rad","LIGHT (1 - 3 DAYS)", 0, black, white, 5, 60, 315, 10, 10)
+	call DrawControl("rad","MODERATE (4 - 5 DAYS)", 0, black, white, 5, 60, 365, 10, 10)
+	call DrawControl("rad","HEAVY (6 - 7 DAYS)", 0, black, white, 5, 60, 415, 10, 10)
+	call DrawControl("rad","EXTRA (x2 DAILY)", 0, black, white, 5, 60, 465, 10, 10)
+	exrs = 0
+end subroutine
+
+subroutine lgtRadBtnClicked()
+	font("Times New Roman", 14, 75)
+	call DrawControl("rad","SEDENTARY (NONE)", 0, black, white, 5, 60, 265, 10, 10)
+	call DrawControl("rad","LIGHT (1 - 3 DAYS)", 0, black, green, 5, 60, 315, 10, 10)
+	call DrawControl("rad","MODERATE (4 - 5 DAYS)", 0, black, white, 5, 60, 365, 10, 10)
+	call DrawControl("rad","HEAVY (6 - 7 DAYS)", 0, black, white, 5, 60, 415, 10, 10)
+	call DrawControl("rad","EXTRA (x2 DAILY)", 0, black, white, 5, 60, 465, 10, 10)
+	exrs = 1
+end subroutine
+
+subroutine modRadBtnClicked()
+	font("Times New Roman", 14, 75)
+	call DrawControl("rad","SEDENTARY (NONE)", 0, black, white, 5, 60, 265, 10, 10)
+	call DrawControl("rad","LIGHT (1 - 3 DAYS)", 0, black, white, 5, 60, 315, 10, 10)
+	call DrawControl("rad","MODERATE (4 - 5 DAYS)", 0, black, green, 5, 60, 365, 10, 10)
+	call DrawControl("rad","HEAVY (6 - 7 DAYS)", 0, black, white, 5, 60, 415, 10, 10)
+	call DrawControl("rad","EXTRA (x2 DAILY)", 0, black, white, 5, 60, 465, 10, 10)
+	exrs = 2
+end subroutine
+
+subroutine hvyRadBtnClicked()
+	font("Times New Roman", 14, 75)
+	call DrawControl("rad","SEDENTARY (NONE)", 0, black, white, 5, 60, 265, 10, 10)
+	call DrawControl("rad","LIGHT (1 - 3 DAYS)", 0, black, white, 5, 60, 315, 10, 10)
+	call DrawControl("rad","MODERATE (4 - 5 DAYS)", 0, black, white, 5, 60, 365, 10, 10)
+	call DrawControl("rad","HEAVY (6 - 7 DAYS)", 0, black, green, 5, 60, 415, 10, 10)
+	call DrawControl("rad","EXTRA (x2 DAILY)", 0, black, white, 5, 60, 465, 10, 10)
+	exrs = 3
+end subroutine
+
+subroutine extRadBtnClicked()
+	font("Times New Roman", 14, 75)
+	call DrawControl("rad","SEDENTARY (NONE)", 0, black, white, 5, 60, 265, 10, 10)
+	call DrawControl("rad","LIGHT (1 - 3 DAYS)", 0, black, white, 5, 60, 315, 10, 10)
+	call DrawControl("rad","MODERATE (4 - 5 DAYS)", 0, black, white, 5, 60, 365, 10, 10)
+	call DrawControl("rad","HEAVY (6 - 7 DAYS)", 0, black, white, 5, 60, 415, 10, 10)
+	call DrawControl("rad","EXTRA (x2 DAILY)", 0, black, green, 5, 60, 465, 10, 10)
+	exrs = 4
+end subroutine
+

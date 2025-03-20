@@ -1,0 +1,89 @@
+# BASL METABOLIC RATE - WEIGHT LOSS CALCULATIONS PACKAGE
+
+# ***NOTE*** - WT must be passed in as kgs, HT must be passed in as cm for the following funcitons to work properly!!
+
+# Calculate BMR using Original Harris-Benedict equation (1919)
+# P = 66.473 + (13.7516 * Weight[kgs]) + (5.0033 *  Height[cm]) + (6.755 * Age[yrs])  *male
+# P = 655.0955 + (9.563 * Weight[kgs]) + (1.8496 * Height[cm]) + (4.675 * Age[yrs])  *female
+subroutine BMR_HB(gender$, wt, ht, age)
+	if gender$ = "f" then
+		bmr = 655.0955 + (9.563 * wt) + (1.8496 * ht) + (4.675 * age)
+	else
+		bmr = 66.473 + (13.7516 * wt) + (5.0033 * ht) + (6.755 * age)
+	end if
+end subroutine
+
+# Calculate BMR using Revised Harris-Benedict equation (1984)
+# P = 88.362 + (13.397 * Weight[kgs]) + (4.799 * Height[cm]) + (5.677 * Age[yrs])  *male
+# P = 447.593 + (9.247 * Weight[kgs]) + (3.098 * Height[cm]) + (4.330 * Age[yrs])  *female
+subroutine BMR_RHB(gender$, wt, ht, age)
+	if gender$ = "f" then
+		bmr = 447.593 + (9.247 * wt) + (3.098 * ht) + (4.330 * age)
+	else
+		bmr = 88.362 + (13.397 * wt) + (4.799 * ht) + (5.677 * age)
+	end if
+end subroutine
+
+# Calculate BMR using Mifflin St Jeor equation (1990)
+# P = s + (10.0 * Weight[kgs]) + (6.25 * Height[cm]) + (5.0 * Age[yrs])  * s = +5[male], -161[female]
+subroutine BMR_MSJ(gender$, wt, ht, age)
+	if gender$ = "f" then
+		bmr = -161 + (10.0 * wt) + (6.25 * ht) + (5.0 * age) 
+	else
+		bmr = 5 + (10.0 * wt) + (6.25 * ht) + (5.0 * age) 
+	end if
+end subroutine
+
+# Calculate BMR using Katch-McArdle equation
+# P = 370 + 21.6l, l = LBM
+subroutine BMR_KM(gender$, wt, ht)
+	bmr = 370 + (21.6 * LBM(gender$, w, h))
+end subroutine
+
+# Calculate Lean Body Mass
+# LBM = 0.407 * Weight [Kg] + 0.267 * Height [Cm] - 19.2  *male
+# LBM = 0.252 * Weight [Kg] + 0.473 * Height [Cm] - 48.3  *female
+function LBM(gender$, wt, ht)
+	if gender$ = "f" then
+		lbm = (0.252 * wt) + (0.473 * ht) - 48.3 
+		return lbm
+	else
+		lbm = (0.407 * wt) + (0.267 * ht) - 19.2
+		return lbm
+	end if
+end function
+
+# Adjust BMR with Basic Activity Factor
+# sedentary (little or no exercise) = BMR x 1.2
+# lightly active (light exercise/sports 1-3 days/week) = BMR x 1.375
+# moderately active (moderate exercise/sports 3-5 days/week) = BMR x 1.55
+# very active (hard exercise/sports 6-7 days a week) = BMR x 1.725
+# extra active (very hard exercise/sports & physical job or 2x training) = BMR x 1.9
+subroutine BAF(bmr, exrs)
+	begin case
+		case exrs = 0
+			bmr = bmr * 1.2 
+		case exrs = 1
+			bmr =  bmr * 1.375
+		case exrs = 2
+			bmr = bmr * 1.55
+		case exrs = 3
+			bmr = bmr * 1.725
+		case exrs = 4
+			bmr = bmr * 1.9 
+	end case
+end subroutine
+
+subroutine weightLoss(bmr, gcals, wt, gwt, units$)
+   weeklyBMR = bmr * 7
+   weeklySavings = (bmr - gcals) * 7
+   # avgWeeklyLoss = ceil(weeklySavings / 3500)  # used with older versions of B256
+   avgwkloss = round(weeklySavings / 3500, 2)
+   if units$ = "m" then
+      timetotgtwt =  int((wt - gwt) / avgwkloss)
+   else
+      timetotgtwt = int((wt - gwt) / avgwkloss)
+   end if
+end subroutine
+
+

@@ -1,0 +1,5 @@
+BMR Console Calc History
+
+v1.2 - divided main loop into subs for easier future modificaiton, added sleep adjustment to BMR calculation 
+v1.1 - removed all BMR and WL func/subs to external package file
+v1.0 - original version

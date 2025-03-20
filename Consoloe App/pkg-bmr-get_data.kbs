@@ -1,0 +1,101 @@
+subroutine getUnits()
+	
+	if units$ = "" then
+		units$ = lower(prompt("SELECT UNITS: (m)-METRIC, (s)-STANDARD"))
+	end if
+	if units$ = "m" then
+		print "Unit selection is: Metric (kgs, cm)"
+		print
+	else
+		print "Unit selection is: Standard (lbs, in)"
+		print
+	end if
+	
+	
+end subroutine
+
+subroutine getBodyData()
+
+	gender$ = lower(prompt("SELECT GENDER: (m)-MALE, (f)-FEMALE"))
+
+	if units$ = "m" then
+		fWeight = float(prompt("ENTER WEIGHT(kg):"))
+	else
+		fWeight = float(prompt("ENTER WEIGHT(lb):"))
+	end if
+
+	if units$ = "m" then
+		fHeight = float(prompt("ENTER HEIGHT(cm):"))
+	else
+		fHeight = float(prompt("ENTER HEIGHT(in):"))
+	end if
+
+	iAge = int(prompt("ENTER AGE(yrs):"))
+	exercise$ = lower(prompt("SELECT ACTIVITY LEVEL (s)-SEDENTARY, (l)-LIGHT, (m)-MODERATE, (v)-VERY, (x)-EXTRA:"))
+
+end subroutine
+
+subroutine getBMRData()
+
+	if equation$ = "" then
+		print "BMR Calculation equations:"
+		print "1. Original Harris-Benedict (1919)"
+		print "2. Revised Harris-Benedict (1984)"
+		print "3. Mifflin St Jeor (1990)"
+		print "4. Katch-McArdle (Current)"
+		print
+		input "ENTER EQUATION SELECTION: ", equation$
+		print
+	end if
+	
+	if units$ = "s" then
+		mWeight = fWeight / 2.205
+		mHeight = fHeight * 2.54
+	else
+		mWeight = fWeight
+		mHeight = fHeight
+	end if
+
+	begin case
+		case equation$ = 1
+			bmr = int(BMR_HB(gender$,mWeight, mHeight, iAge))
+		case equation$ = 2
+			bmr = int(BMR_RHB(gender$,mWeight, mHeight, iAge))
+		case equation$ = 3
+			bmr = int(BMR_MSJ(gender$,mWeight, mHeight, iAge))
+		case equation$ = 4
+			bmr = int(BMR_KM(gender$, mWeight, mHeight))
+	end case
+
+	baf = int(BAF(bmr, exercise$))
+
+end subroutine
+
+subroutine getWeightLossData()
+ 
+	if units$ = "m" then
+		gWeight = float(prompt("ENTER TARGET WEIGHT(kg):"))
+		gWeight = gWeight * 2.205
+	else
+		gWeight = float(prompt("ENTER TARGET WEIGHT(lb):"))
+	end if
+
+	iCalories = int(prompt("ENTER DAILY CALORIE GOAL:"))
+
+	activity$ = lower(prompt("ENTER 'y' IF YOU WANT WEIGHT LOSS CALCULATION TO ACCOUNT FOR ACTIVITY."))
+	
+	if activity$  = "y" then
+		if units$ = "m" then
+			call weightLoss(baf, iCalories, mWeight * 2.205, gWeight, units$)
+		else
+			call weightLoss(baf, iCalories, fWeight, gWeight, units$)
+		end if
+	else
+		if units$ = "m" then
+			call weightLoss(bmr, iCalories, mWeight * 2.205, gWeight, units$)
+		else
+			call weightLoss(bmr, iCalories, fWeight, gWeight, units$)
+		end if
+	end if
+	
+end subroutine

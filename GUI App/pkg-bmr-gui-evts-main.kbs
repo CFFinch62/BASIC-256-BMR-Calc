@@ -1,0 +1,125 @@
+include "pkg-bmr-gui-evts-radbtns.kbs"
+include "pkg-bmr-gui-evts-txtboxes.kbs"
+include "pkg-bmr-gui-evts-cmdbtns.kbs"
+
+# loop for monitoring BMR Calc mouse position and clicks
+subroutine BMR_EventHandler()
+	quit = false
+	#Mouse click event hanlder loop
+	while quit = false
+		# was left button clicked?
+		if clickb = 1 then
+			# was Exit buton clicked?
+			if (mousex > 1000 AND mousex < 1020) then
+				if mousey < 20 then
+					#  Set 'quit' to exit while loop and end program
+					quit = true
+					clickclear()
+				end if
+			end if
+			# was STANDARD radio button clicked?
+			if (mousex > 50 AND mousex < 70) then
+				if mousey > 90 AND mousey < 110  then
+					call stdRadBtnClicked()
+					clickclear()
+				end if
+			end if
+			# was METRIC radio button clicked?
+			if (mousex > 50 AND mousex < 70) then
+				if mousey > 140 AND mousey < 160  then
+					call metricRadBtnClicked()
+					clickclear()
+				end if
+		    end if
+		    # was MALE radio button clicked?
+			if (mousex > 270 AND mousex < 290) then
+				if mousey > 90 AND mousey < 110  then
+					call maleRadBtnClicked()
+					clickclear()
+				end if
+			end if
+			# was FEMALE radio button clicked?
+			if (mousex > 270 AND mousex < 290) then
+				if mousey > 140 AND mousey < 160  then
+					call femaleRadBtnClicked()
+					clickclear()
+				end if
+		    end if
+		     # was SEDENTARY radio button clicked?
+			if (mousex > 50 AND mousex < 70) then
+				if mousey > 260 AND mousey < 270  then
+					call sedRadBtnClicked()
+					clickclear()
+				end if
+			end if
+			 # was LIGHT radio button clicked?
+			if (mousex > 50 AND mousex < 70) then
+				if mousey > 310 AND mousey < 320  then
+					call lgtRadBtnClicked()
+					clickclear()
+				end if
+			end if
+			 # was MODERATE radio button clicked?
+			if (mousex > 50 AND mousex < 70) then
+				if mousey > 350 AND mousey < 370  then
+					call modRadBtnClicked()
+					clickclear()
+				end if
+			end if
+			# was HEAVY radio button clicked?
+			if (mousex > 50 AND mousex < 70) then
+				if mousey > 410 AND mousey < 420  then
+					call hvyRadBtnClicked()
+					clickclear()
+				end if
+			end if
+			# was EXTRA radio button clicked?
+			if (mousex > 50 AND mousex < 70) then
+				if mousey > 460 AND mousey < 470  then
+					call extRadBtnClicked()
+					clickclear()
+				end if
+			end if
+			# was HB radio button clicked?
+			if (mousex > 725 AND mousex < 735) then
+				if mousey > 95 AND mousey < 105  then
+					call hbRadBtnClicked()
+					clickclear()
+				end if
+			end if
+			# was Rev HB radio button clicked?
+			if (mousex > 725 AND mousex < 735) then
+				if mousey > 165 AND mousey < 175  then
+					call rhbRadBtnClicked()
+					clickclear()
+				end if
+			end if
+			# was MSJ radio button clicked?
+			if (mousex > 725 AND mousex < 735) then
+				if mousey > 235 AND mousey < 245  then
+					call msjRadBtnClicked()
+					clickclear()
+				end if
+			end if
+			# was KM radio button clicked?
+			if (mousex > 725 AND mousex < 735) then
+				if mousey > 305 AND mousey < 315  then
+					call kmRadBtnClicked()
+					clickclear()
+				end if
+			end if
+			# was CALCULATE button clicked?
+			if (mousex > 790 AND mousex < 1005) then
+				if mousey > 555 AND mousey < 640  then
+					call calculateBtnClicked()
+				end if
+			end if
+			# was RESET button clicked?
+			if (mousex > 790 AND mousex < 1005) then
+				if mousey > 670 AND mousey < 755  then
+					call resetBtnClicked()
+				end if
+			end if
+		end if
+	end while
+end subroutine

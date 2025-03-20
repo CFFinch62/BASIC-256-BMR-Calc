@@ -1,0 +1,100 @@
+# BASL METABOLIC RATE - WEIGHT LOSS CALCULATIONS PACKAGE
+
+# Calculate BMR using Original Harris-Benedict equation (1919)
+# P = 66.473 + (13.7516 * Weight[kgs]) + (5.0033 *  Height[cm]) + (6.755 * Age[yrs])  *male
+# P = 655.0955 + (9.563 * Weight[kgs]) + (1.8496 * Height[cm]) + (4.675 * Age[yrs])  *female
+function BMR_HB(g$,w,h,a)
+	if g$ = "f" then
+		bmr = 655.0955 + (9.563 * w) + (1.8496 * h) + (4.675 * a)
+	else
+		bmr = 66.473 + (13.7516 * w) + (5.0033 * h) + (6.755 * a)
+	end if
+	return bmr
+end function
+
+# Calculate BMR using Revised Harris-Benedict equation (1984)
+# P = 88.362 + (13.397 * Weight[kgs]) + (4.799 * Height[cm]) + (5.677 * Age[yrs])  *male
+# P = 447.593 + (9.247 * Weight[kgs]) + (3.098 * Height[cm]) + (4.330 * Age[yrs])  *female
+function BMR_RHB(g$,w,h,a)
+	if g$ = "f" then
+		bmr = 447.593 + (9.247 * w) + (3.098 * h) + (4.330 * a)
+	else
+		bmr = 88.362 + (13.397 * w) + (4.799 * h) + (5.677 * a)
+	end if
+	return bmr
+end function
+
+# Calculate BMR using Mifflin St Jeor equation (1990)
+# P = s + (10.0 * Weight[kgs]) + (6.25 * Height[cm]) + (5.0 * Age[yrs])  * s = +5[male], -161[female]
+function BMR_MSJ(g$,w,h,a)
+	if g$ = "f" then
+		bmr = -161 + (10.0 * w) + (6.25 * h) + (5.0 * a) 
+	else
+		bmr = 5 + (10.0 * w) + (6.25 * h) + (5.0 * a) 
+	end if
+	return bmr
+end function
+
+# Calculate BMR using Katch-McArdle equation
+# P = 370 + 21.6l, l = LBM
+function BMR_KM(g$,w,h)
+	bmr = 370 + (21.6 * LBM(g$,w,h))
+	return bmr
+end function
+
+# Calculate Lean Body Mass
+# LBM = 0.407 * Weight [Kg] + 0.267 * Height [Cm] - 19.2  *male
+# LBM = 0.252 * Weight [Kg] + 0.473 * Height [Cm] - 48.3  *female
+function LBM(g$,w,h)
+	if g$ = "f" then
+		lbm = (0.252 * w) + (0.473 * h) - 48.3 
+		return lbm
+	else
+		lbm = (0.407 * w) + (0.267 * h) - 19.2
+		return lbm
+	end if
+end function
+
+# Adjust BMR with Basic Activity Factor
+# sedentary (little or no exercise) = BMR x 1.2
+# lightly active (light exercise/sports 1-3 days/week) = BMR x 1.375
+# moderately active (moderate exercise/sports 3-5 days/week) = BMR x 1.55
+# very active (hard exercise/sports 6-7 days a week) = BMR x 1.725
+# extra active (very hard exercise/sports & physical job or 2x training) = BMR x 1.9
+function BAF(bmr,exercise$)
+	begin case
+		case exercise$ = "s"
+			return bmr * 1.2 
+		case exercise$ = "l"
+			return bmr * 1.375
+		case exercise$ = "m"
+			return bmr * 1.55
+		case exercise$ = "v"
+			return bmr * 1.725
+		case exercise$ = "x"
+			return bmr * 1.9 
+		case exercise$ = "S"
+			return bmr * 1.2 
+		case exercise$ = "L"
+			return bmr * 1.375
+		case exercise$ = "M"
+			return bmr * 1.55
+		case exercise$ = "V"
+			return bmr * 1.725
+		case exercise$ = "X"
+			return bmr * 1.9 
+	end case
+end function
+
+subroutine weightLoss(bmr, c, w, gw, u$)
+   weeklyBMR = bmr * 7
+   weeklySavings = (bmr - c) * 7
+   avgWeeklyLoss = round(weeklySavings / 3500, 2)
+   if u$ = "m" or u$ = "M" then
+      timeToTargetWeight = int((w - gw) / avgWeeklyLoss)
+   else
+      timeToTargetWeight = int((w - gw) / avgWeeklyLoss)
+   end if
+end subroutine
+
+

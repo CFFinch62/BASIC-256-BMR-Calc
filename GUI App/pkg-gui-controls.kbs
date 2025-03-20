@@ -1,0 +1,83 @@
+# Create and draw GUI controls on graphics window
+# ctl -> type of control
+#        win -> window
+#        ttl -> title bar
+#		 ext -> exit button
+#		 fra -> frame
+#	     tbx -> textbox
+#	     lbl -> label
+#	     btn -> standard button
+#        chk -> checkbox
+#        rad -> radio button
+# txt -> caption(win,lbl,btn,ext), text(tbx, ttl)
+# tpos -> title text justification (-1 is left, 0 is centered, and 1 is right)
+# fg -> foreground color (win,lbl.tbx,btn)
+# bg -> background color (win,tbx,btn, lbl[set = window bg for transparent] )color(bg)
+# bd -> control border size
+# x, y -> sets upper left corner of control
+# h, w -> sets height and width of control
+
+subroutine DrawControl (ctl$, txt$, tpos, fg, bg, bd, x, y, w, h)
+	begin case
+		case ctl$ = "win"												# Creates a program window
+			graphsize(w, h)
+			color (fg, bg)
+			penwidth(bd)
+			rect(x, y, w, h)
+		case ctl$ = "ttl"												# Creates a title bar with caption
+			color(fg, bg)
+			penwidth(bd)
+			rect(x,y,w,h)												# draws empty title bar
+			begin case
+				case tpos = -1
+					text(x + 2, y, title$)								# draws left justified title
+				case tpos = 1
+					xt = floor(w - textwidth(txt$) - 2)
+					yt = floor((h - textheight()) / 2)
+					text(xt,yt,title$)									#  draws right justified title
+				else
+					xt = floor((w - textwidth(txt$)) / 2)
+					yt = floor((h - textheight()) / 2)
+					text(xt,yt,txt$)
+			end case
+		case ctl$ = "ext"												# Create exit button
+			color(fg, bg)
+			penwidth(bd)
+			rect(x,y,w,h)
+			text(x + 3, y - 3, txt$)
+		case ctl$ = "fra"
+			color(bg)
+			penwidth(bd)
+			line((x+10)+Textwidth(txt$),y,x+w,y)
+			line(x+w,y,x+w,y+h)
+			line(x,y+h,x+w,y+h)
+			line(x,y,x,y+h)
+			color(fg)
+			text(x+5,y-15,txt$)
+		case ctl$ = "lbl"												#Creates a label  control
+			color(fg, bg)
+			text(x,y,txt$)
+		case ctl$ = "tbx"												#Creates a textbox control
+			color(fg, bg)
+			penwidth(bd)
+			rect(x,y,w, h)
+			text(x,y-floor(h/2),txt$)
+		case ctl$ = "btn"												#Creates a button control
+			color(fg, bg)
+			penwidth(bd)
+			rect(x,y,w,h)
+			xt = floor((w-Textwidth(txt$)) / 2)
+			yt = floor((h / 2) / 2)
+			text(x+xt,y+yt,txt$)
+		case ctl$ = "chk"												#Creates a checkbox control
+			alert("Checkbox not implemented yet!")
+		case ctl$ = "rad"												#Creates a radio button control
+			color(fg,bg)
+			penwidth bd
+			circle(x,y,w)
+			text(x+w+15,y-h,txt$)
+		else
+			alert("Invalid Control Type!") 								# Show warning message is unknown control type
+	end case
+end subroutine
+

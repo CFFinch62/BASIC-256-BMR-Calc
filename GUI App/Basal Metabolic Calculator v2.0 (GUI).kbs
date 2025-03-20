@@ -1,0 +1,39 @@
+# import helper packages
+include "pkg-bmr-gui-create.kbs"				# subs/functions for describing all controls on the main window
+include "pkg-bmr-gui-evts-main.kbs"    	# subs/functions for monitoring events (mouse position/clicks) and taking action for each event
+include "pkg-bmr-gui-calcs.kbs"    			# subs/functions for BMR math
+
+# declare globals
+global title$, win_x, win_y, win_w, win_h	# main window attributes
+global unit$, gwt, gcals, bmreq					# units, goals, equation to be used for calulations
+global gender$, exrs, ht, wt, age				# body data
+global bmr, avgwkloss, timetotgtwt			# calculations results
+
+# inittailize globals
+font("Times New Roman", 28, 75)
+win_x = 0
+win_y = 0
+win_w = 1024
+win_h = 768
+title$ = "BASAL METABOLIC RATE WEIGHT LOSS CALCULATOR"
+unit$ = "s"
+gender$ = "m"
+exrs = 0
+gwt = 0
+gcals = 0
+bmreq = 3
+ht = 0
+wt = 0
+age = 0
+bmr = 0
+avgwkloss = 0
+timetotgtwt = 0
+quit = false
+clickclear()
+
+# START MAIN PROGRAM LOOP
+call CreateBMR_GUI()							# create the main form
+call BMR_EventHandler()						# process events
+clg
+end
+# END MAIN PROGRAM LOOP
